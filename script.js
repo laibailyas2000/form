@@ -5,7 +5,7 @@ function takeVal() {
   }
 
   console.log("takeval loaded");
-  // document.getElementById("loading").style.display = "flex";
+
   var name = document.querySelector('input[name="name"]').value;
   var fname = document.querySelector('input[name="fname"]').value;
   var email = document.querySelector('input[name="email"]').value;
