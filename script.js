@@ -1,75 +1,109 @@
+//This event listener is triggered when the DOM content is fully loaded. It ensures that the script
+// inside the function is executed only when the DOM is ready.
+document.addEventListener("DOMContentLoaded", function () {
+  //This adds an event listener to the form with the ID "myForm" for the submit event. When the form
+  //is submitted, the function inside will be executed.
+  document.getElementById("myform").addEventListener("submit", takeVal);
+});
+
 console.log("script loaded");
-function takeVal() {
-  if (!validation()) {
-    return false;
+
+//This is the function that handles form submission. It first prevents the default form submission
+//behavior using event.preventDefault(), then gathers form data and sends it to the server.
+function takeVal(event) {
+  event.preventDefault(); // Prevent default form submission behavior
+  if (validation()) {
+    //These lines retrieve the input values from the form fields using the querySelector method and store them in variables
+
+    console.log("takeval loaded");
+
+    var name = document.querySelector('input[name="name"]').value;
+    var fname = document.querySelector('input[name="fname"]').value;
+    var email = document.querySelector('input[name="email"]').value;
+    var phone = document.querySelector('input[name="phone"]').value;
+
+    var formData = {
+      name: name,
+      fname: fname,
+      email: email,
+      phone: phone,
+    };
+    console.log("data formed");
+    postData(formData);
   }
 
-  console.log("takeval loaded");
-
-  var name = document.querySelector('input[name="name"]').value;
-  var fname = document.querySelector('input[name="fname"]').value;
-  var email = document.querySelector('input[name="email"]').value;
-  var phone = document.querySelector('input[name="phone"]').value;
-
-  var formData = {
-    name: name,
-    fname: fname,
-    email: email,
-    phone: phone,
-  };
-
-  console.log("data formed");
-
-  fetch("http://localhost:1000/formdata", {
-    method: "POST",
+  //post method
+  function postData(formData) {
+    fetch("http://localhost:1000/formdata", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+  }
+}
+function updateTable() {
+  fetch("http://localhost:1000/get", {
+    method: "GET",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      console.log("response received");
+      // Handle the response here
+      if (response.ok) {
+        return response.json(); // Parse the JSON in the response
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    })
+    .then((data) => {
+      console.log("Data received from server:");
+      displayTableData(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      // Handle any errors that occurred during the fetch
+    });
+}
+
+function displayTableData(data) {
+  // Get the table body element
+  let tbody = document.getElementById("table-body");
+  // Clear existing rows in the table
+  tbody.innerHTML = "";
+
+  // Iterate through the data and update the table
+  data.forEach((item, index) => {
+    let mytable = `<tr>
+    <td scope="col">${index + 1}</td>
+      <td scope="col"><span id="name-${index}">${item.name}</span></td>
+      <td scope="col"><span id="fname-${index}">${item.fname}</td>
+      <td scope="col"><span id="email-${index}">${item.email}</span></td>
+      <td scope="col"><span id="phone-${index}">${item.phone}</span></td>
+      <td>
+        <button class="btn btn-danger delete-btn" onclick="deleteUser('${
+          item._id
+        }')">
+          <i class="fa fa-trash" aria-hidden="true"></i></button>
+
+        <button type="button" class="btn btn-danger" onclick="updateUserInCell('${
+          item._id
+        }', ${index})">
+        <i class="fas fa-edit"></i></button>
+
+        
+
+     <button type="button" class="btn btn-danger" onclick="saveChanges('${
+       item._id
+     }', ${index})">
+      <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+      </td>
+      </tr>`;
+    let tbody = document.getElementById("table-body");
+    tbody.innerHTML += mytable; // Use innerHTML to append the HTML string
   });
 }
 
-fetch("http://localhost:1000/get", {
-  method: "GET",
-  headers: { "Content-Type": "application/json" },
-})
-  .then((response) => {
-    console.log("response received");
-    // Handle the response here
-    if (response.ok) {
-      return response.json(); // Parse the JSON in the response
-    } else {
-      throw new Error("Network response was not ok");
-    }
-  })
-  .then((data) => {
-    console.log("Data received from server:");
-    // Loop through the data and add rows to the table
-    data.forEach((item, index) => {
-      let mytable = `<tr>
-          <td scope="col">${index + 1}</td>
-          <td scope="col">${item.name}</td>
-          <td scope="col">${item.fname}</td>
-          <td scope="col">${item.email}</td>
-          <td scope="col">${item.phone}</td>
-          <td>
-          <button class="btn btn-danger delete-btn" onclick="deleteUser('${
-            item._id
-          }')">Delete</button>
-          </td>
-          <td>
-          <button class="btn btn-secondary" onclick="openUpdateModal('${
-            item._id
-          }')">Update</button>
-        </td>
-        
-        </tr>`;
-      let tbody = document.getElementById("table-body");
-      tbody.innerHTML += mytable; // Use innerHTML to append the HTML string
-    });
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-    // Handle any errors that occurred during the fetch
-  });
+document.addEventListener("DOMContentLoaded", updateTable);
 
 async function deleteUser(userId) {
   fetch(`http://localhost:1000/delete/${userId}`, {
@@ -94,37 +128,32 @@ async function deleteUser(userId) {
     });
 }
 
-fetch("http://localhost:1000/update", {
-  method: "PUT",
-  headers: { "content-type": "application/json" },
-})
-  .then((response) => {
-    if (response.ok) {
-      return response.text();
-    } else {
-      throw new Error("Network response of update was not ok");
-    }
-  })
-  .then((text) => {
-    // Log or process the JSON response data
-    console.log(text);
-  })
-  .catch((error) => {
-    console.error("Error: ", error);
-  });
-
-function updateUser() {
-  // Validation logic here if needed
-
-  // Get updated user data from modal fields
-  var name = document.querySelector('#updateForm input[name="name"]').value;
-  var fname = document.querySelector('#updateForm input[name="fname"]').value;
-  var email = document.querySelector('#updateForm input[name="email"]').value;
-  var phone = document.querySelector('#updateForm input[name="phone"]').value;
-
-  var formData = {
+// This function makes a table cell editable by setting its contentEditable attribute to true
+function makeEditable(element) {
+  element.contentEditable = true;
+  element.focus();
+}
+// This function makes the table cells editable to update user data directly in the table cell.
+function updateUserInCell(id, index, formData) {
+  // Get the table cell elements for name, email, and phone
+  const nameCell = document.getElementById(`name-${index}`);
+  const emailCell = document.getElementById(`email-${index}`);
+  const phoneCell = document.getElementById(`phone-${index}`);
+  // Make table cells editable
+  makeEditable(nameCell);
+  makeEditable(emailCell);
+  makeEditable(phoneCell);
+}
+//This function saves the changes made to user data directly in the table cell by sending a PUT request
+//to the server.
+function saveChanges(userId, index) {
+  // Get the updated values from the table cell
+  const name = document.getElementById(`name-${index}`).textContent.trim();
+  const email = document.getElementById(`email-${index}`).textContent.trim();
+  const phone = document.getElementById(`phone-${index}`).textContent.trim();
+  // Construct an object with the updated data
+  const updatedData = {
     name: name,
-    fname: fname,
     email: email,
     phone: phone,
   };
@@ -133,37 +162,11 @@ function updateUser() {
   fetch(`http://localhost:1000/update/${userId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(updatedData),
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data); // Log or process response
-      // Optionally, you can close the modal after successful update
-      var myModal = new bootstrap.Modal(document.getElementById("updateModal"));
-      myModal.hide();
-    })
-    .catch((error) => console.error("Error:", error));
-
-  return false; // Prevent form submission
-}
-
-// Add this function to handle update button click and populate modal with user data
-function openUpdateModal(userId) {
-  fetch(`http://localhost:1000/get/${userId}`)
-    .then((response) => response.json())
-    .then((user) => {
-      // Populate modal fields with user data
-      document.querySelector('#updateForm input[name="name"]').value =
-        user.name;
-      document.querySelector('#updateForm input[name="fname"]').value =
-        user.fname;
-      document.querySelector('#updateForm input[name="email"]').value =
-        user.email;
-      document.querySelector('#updateForm input[name="phone"]').value =
-        user.phone;
-      // Show update modal
-      var myModal = new bootstrap.Modal(document.getElementById("updateModal"));
-      myModal.show();
+      console.log("Data successfully UPDATED : ", data);
     })
     .catch((error) => console.error("Error:", error));
 }

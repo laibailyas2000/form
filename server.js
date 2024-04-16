@@ -36,13 +36,15 @@ api.delete("/delete/:userId", async (req, resp) => {
   resp.send("user deleted successfully");
 });
 
-api.put("/update", async (req, resp) => {
+api.put("/update/:userId", async (req, resp) => {
+  const userId = req.params.userId;
+  const updatedData = req.body; // Assuming the request body contains the updated data
   let db = await dbconnect();
   let result = await db.updateOne(
-    { _id: new ObjectId("65df1c6042b1e2b1cf1e3987") },
-    { $set: { name: "sara" } }
+    { _id: new ObjectId(userId) },
+    { $set: updatedData } // Use the updated data from the request body
   );
-  resp.send("record is updated successfully");
+  resp.send(updatedData);
 });
 
 api.listen(1000, () => console.log("server is running on port 1000"));
