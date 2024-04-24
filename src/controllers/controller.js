@@ -9,9 +9,6 @@ async function loginForm(req, res) {
     // Extract login data from the request body
     const { uname, password } = req.body;
 
-    // Log the data received from the user
-    console.log("Data received from user:", { uname, password });
-
     // Construct the login document
     const loginData = {
       uname: uname,
