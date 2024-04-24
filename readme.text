@@ -1,0 +1,29 @@
+# form using express
+
+This is a simple form which take input form user and send it to database.
+
+## Installation
+
+### Dependencies
+- Node.js
+- Express.js
+-body-parser
+-cors
+-mongodb
+
+### Installation Instructions
+1. Install dependencies: `npm install`
+
+## Usage
+
+### How to Use
+1. Go into the directory by cd src, then cd config
+2. Start the server: `node server.js`
+3. Access the application at `http://localhost:1000`
+
+## Features
+
+- Basic Express.js setup
+- Routing structure
+- Error handling middleware
+

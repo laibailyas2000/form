@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/login.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <form
+            action="/login"
+            onsubmit="return loginValidation()"
+            method="post"
+            class="login-form"
+          >
+            <h2 class="mb-4 text-center">Login</h2>
+
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Username"
+                name="uname"
+                required
+              />
+              <small class="text-danger" id="uname-validation"></small>
+            </div>
+
+            <div class="mb-3">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                name="psw"
+                required
+              />
+              <small class="text-danger" id="pass-validation"></small>
+            </div>
+
+            <div class="mb-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                checked="checked"
+                name="remember"
+                id="remember"
+              />
+              <label class="form-check-label" for="remember">Remember me</label>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="button" class="btn btn-secondary">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="../js/login.js"></script>
+  </body>
+</html>

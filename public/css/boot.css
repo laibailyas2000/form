@@ -46,6 +46,11 @@ button {
 .btn btn-primary {
   margin-bottom: 50;
 }
+.btn-primary {
+  float: right;
+  margin-top: 10px;
+  margin-right: 108px;
+}
 
 .table {
   color: black;

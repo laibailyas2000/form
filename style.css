@@ -35,20 +35,12 @@
   color: #555; /* Dark grey */
 }
 
-.button {
-  background-color: #4caf50; /* Green */
-  border: none;
-  color: white;
-  border-radius: 20px;
-  width: 100px;
-  height: 45px;
-  font-size: 20px;
-  margin-top: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  text-shadow: 1px 1px 2px #000000;
-  transition: background-color 0.3s ease;
+.btn-primary {
+  float: right;
+  margin-top: 10px;
+  margin-right: 108px;
 }
 
-.button:hover {
-  background-color: #45a049; /* Darker Green */
+.modal-footer {
+  margin-top: 0%;
 }
