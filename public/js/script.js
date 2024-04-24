@@ -8,7 +8,6 @@ function takeVal(event) {
   console.log("takeval loaded");
   event.preventDefault(); // Prevent default form submission behavior
   if (validation()) {
-    console.log("validation runned");
     //These lines retrieve the input values from the form fields using the querySelector method and store them in variables
 
     var name = document.querySelector('input[name="name"]').value;
@@ -29,7 +28,6 @@ function takeVal(event) {
 
 //post method
 function postData(formData) {
-  console.log("post api called");
   fetch("http://localhost:1000/formdata", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -52,13 +50,12 @@ function postData(formData) {
 // };
 // postData(testData);
 function updateTable() {
-  console.log("get method worked");
   fetch("http://localhost:1000/get", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   })
     .then((response) => {
-      console.log("response received");
+      //console.log("response received");
       if (response.ok) {
         return response.json();
       } else {
@@ -70,6 +67,7 @@ function updateTable() {
       displayTableData(data);
     })
     .catch((error) => {
+      S;
       console.error("Error:", error);
     });
 }
