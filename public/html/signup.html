@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/login.css" />
-    <title>Login</title>
-    <script
-      src="https://kit.fontawesome.com/034662ef60.js"
-      crossorigin="anonymous"
-    ></script>
+    <link rel="stylesheet" href="../css/signup.css" />
+    <title>Signup</title>
   </head>
   <body>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6 col-lg-4">
-          <form id="login-form" method="post" class="login-form active-form">
-            <h2 id="title" class="mb-4 text-center">Login</h2>
+          <form id="signup-form" method="post" class="login-form">
+            <h2 id="title" class="mb-4 text-center">Sign up</h2>
+
+            <div class="mb-3">
+              <input
+                id="namefield"
+                type="text"
+                class="form-control"
+                placeholder="Username"
+                name="uname"
+              />
+              <small class="text-danger" id="uname-validation"></small>
+            </div>
 
             <div class="mb-3">
               <input
@@ -53,15 +58,14 @@
               />
               <label class="form-check-label" for="remember">Remember me</label>
             </div>
-
             <div class="d-grid gap-2">
-              <button type="submit" id="login-btn" class="btn btn-primary">
-                Log in
+              <button type="submit" id="signup-btn" class="btn btn-primary">
+                Sign up
               </button>
               <a
-                href="file:///C:/Users/Blue%20Star%20Computer/Desktop/laiba/myFORM/public/html/signup.html"
-                aria-label="Signup"
-                >Sign up</a
+                href="file:///C:/Users/Blue%20Star%20Computer/Desktop/laiba/myFORM/public/html/login.html"
+                aria-label="Already have an account?"
+                >Already have an account?</a
               >
             </div>
           </form>
