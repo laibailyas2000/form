@@ -13,7 +13,7 @@ body {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 450px;
-  padding: 200px 33px 173px;
+  padding: 240px 33px 173px;
 }
 
 .login-form {
@@ -29,11 +29,6 @@ body {
   transition: opacity 0.3s ease;
   opacity: 1;
 }
-
-.form-control {
-  border-radius: 8px;
-}
-
 .btn {
   border-radius: 8px;
 }
@@ -46,10 +41,4 @@ body {
 .btn-primary:hover {
   background-color: #0056b3;
   border-color: #0056b3;
-}
-
-a {
-  position: absolute;
-  left: 357px;
-  bottom: 17px;
 }
